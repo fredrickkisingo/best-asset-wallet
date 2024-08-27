@@ -14,6 +14,7 @@ import WalletSend from '../views/WalletSend';
 import WalletActivity from '../views/WalletActivity';
 import WalletManageKeys from '../views/WalletManageKeys';
 import WalletProfile from '../views/WalletProfile';
+import WalletUserName from '../views/walletUserName';
 import WalletBuy from '../views/Wallet/WalletBuy';
 import setAuthToken from "../../utils/setAuthToken"
 import WalletUtil from "../../utils/wallet"
@@ -260,7 +261,9 @@ function Wallet() {
                   :idx===4?
                     <WalletManageKeys network={network}/>
                   :idx===5?
-                    <WalletProfile />
+                    <WalletProfile />:
+                    idx===6?
+                    <WalletUserName />
                   :null
                 }
               </Row>

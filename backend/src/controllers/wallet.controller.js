@@ -10,6 +10,7 @@ class WalletController {
         }
     }
 
+    
     createWallet = async (req, res, next) => {
         try {
             const result = await WalletService.createWallet(req.currentUser.id, req.body.keyphrase, req.body.locale || "En");

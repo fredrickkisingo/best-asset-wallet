@@ -9,7 +9,7 @@ const errorMiddleware = require('./middleware/error.middleware');
 const userRouter = require('./routes/api/user.route');
 const walletRouter = require('./routes/api/wallet.route');
 const subscriberRouter = require('./routes/api/subscriber.route');
-const ieo = require('./routes/api/ieo.route');
+// const ieo = require('./routes/api/ieo.route');
 const p2p = require('./routes/api/p2p.route');
 const WalletService = require('./services/wallet.service');
 cron.schedule('*/10 * * * *', () => {
@@ -27,8 +27,11 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 // enabling cors for all requests by using cors middleware
-app.use(cors());
-// Enable pre-flight
+app.use(cors({
+  origin: 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));// Enable pre-flight
 app.options("*", cors());
 app.use(
     session({
@@ -48,7 +51,7 @@ app.use(cookieParser());
 app.use(`/api/users/`, userRouter);
 app.use(`/api/wallets/`, walletRouter);
 app.use(`/api/subscribers`, subscriberRouter);
-app.use(`/api/ieo`, ieo);
+// app.use(`/api/ieo`, ieo);
 app.use(`/api/p2p`, p2p);
 
 // 404 error

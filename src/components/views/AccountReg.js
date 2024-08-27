@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { List, message, Avatar, Skeleton, Divider } from 'antd';
-import { MailOutlined ,SafetyOutlined,LockOutlined,TeamOutlined ,EyeTwoTone,EyeInvisibleOutlined} from '@ant-design/icons';
+import { MailOutlined ,SafetyOutlined,LockOutlined,TeamOutlined ,EyeTwoTone,EyeInvisibleOutlined, UserOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import openNotification from "../helpers/notification";
 import RegCard from '../component/RegCard';
@@ -13,6 +13,7 @@ const wallet = new Wallet();
 function AccountReg(props) {
   const [form] = Form.useForm();
   const [email, setEmail] = useState("");
+  const [user_name, setuser_name] = useState("")
   const [password,setPassword]=useState("");
   const [verificationCode,setVerificationCode]=useState(0);
   const [inviteCode,setInviteCode]=useState(0);
@@ -54,8 +55,9 @@ function AccountReg(props) {
     
            form.validateFields()
             .then((values) => {
-              console.log("validateFile")
+     
               axios.post(serverUrl+"users/signup",{
+                user_name:user_name,
                 email:email,
                 email_verify:verificationCode,
                 password:password,
@@ -112,6 +114,19 @@ function AccountReg(props) {
           >
             <Form.Item
               validateTrigger = "onBlur"
+              name={[ 'username']}
+              // rules={[{type: 'text',message:t('Invalid User Name')},{ required: true, message: t('Please input your User Name!') }]}
+            >
+              <Input  
+              
+              placeholder= {t("User Name")} 
+              prefix={<UserOutlined className="m-2"/> } 
+              className=" rounded-lg  bg-gray-200 text-black "
+              onChange={(e)=>setuser_name(e.target.value)}/>
+            </Form.Item>
+
+            <Form.Item
+              validateTrigger = "onBlur"
               name={[ 'email']}
               rules={[{type: 'email',message:t('Invalid Email Address')},{ required: true, message: t('Please input your E-mail!') },{max:50,message:t('Please input less than 50 characters')}]}
             >
@@ -122,6 +137,12 @@ function AccountReg(props) {
               className=" rounded-lg  bg-gray-200 text-black "
               onChange={(e)=>setEmail(e.target.value)}/>
             </Form.Item>
+
+
+
+
+
+
             <Form.Item
               name="Verification"
               rules={[
